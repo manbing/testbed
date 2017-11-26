@@ -1,0 +1,3 @@
+[submodule "programs.kernel/pikoRT"]
+	path = programs.kernel/pikoRT
+	url = https://github.com/Piko-RT/pikoRT.git
