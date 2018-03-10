@@ -1,8 +1,9 @@
 CC = arm-linux-gnueabi-gcc 
 CFLAGS = -g -Og 
 LDFLAGS = 
-SOURCES = corrupt_stack.c
-OBJS =  $(patsubst %c,%o,${SOURCES})
+SOURCES = $(wildcard *.c)
+#SOURCES = $(notdir $(file))
+OBJS =  $(patsubst %.c,%.o, $(SOURCES))
 APPLET = corrupt_stack
 
 #	$@ => target
@@ -10,14 +11,15 @@ APPLET = corrupt_stack
 #	$^ => all dependency element
 
 all: $(OBJS)
-	
 	$(CC) ${LDLAGS} -o $(APPLET) $^
 
 %.o: $(SOURCES) 
+	$(CC) -M -c ${CFLAGS} $< > $@.cmd
 	$(CC) -c ${CFLAGS} -o $@ $<
 
 clean:
-	rm $(OBJS)
-	rm ${APPLET}
+	rm -f $(OBJS)
+	rm -f ${APPLET}
+	rm -f *.cmd
 
 install:
