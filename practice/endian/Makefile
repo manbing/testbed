@@ -4,7 +4,7 @@ LDFLAGS =
 SOURCES = $(wildcard *.c)
 #SOURCES = $(notdir $(file))
 OBJS =  $(patsubst %.c,%.o, $(SOURCES))
-APPLET = $(patsubst %.c,%, $(SOURCES))
+APPLET = $(patsubst %.c,%, $(SOURCES)) 
 
 #	$@ => target
 #	$< => first dependency element
