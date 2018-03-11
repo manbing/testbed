@@ -9,6 +9,7 @@ APPLET = $(patsubst %.c,%, $(SOURCES))
 #	$@ => target
 #	$< => first dependency element
 #	$^ => all dependency element
+#	/usr/arm-linux-gnueabi/lib/
 
 all: $(OBJS)
 	$(CC) ${LDLAGS} -o $(APPLET) $^
