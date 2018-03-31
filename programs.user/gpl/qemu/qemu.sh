@@ -8,7 +8,7 @@ start)
 ;;
 
 kgbd)
-	sudo qemu-system-arm -M vexpress-a9 -cpu cortex-a9 -nographic -kernel ./arm-image/kernel/zImage -initrd arm-image/rootfs.img -append "root=/dev/ram rdinit=/bin/sh kgdboc=ttyAMA0,115200 kgdbwait"
+	sudo qemu-system-arm -M vexpress-a9 -cpu cortex-a9 -m 1024M -net nic -net tap -kernel ./arm-image/kernel/zImage -dtb arm-image/kernel/vexpress-v2p-ca9.dtb -initrd arm-image/rootfs.img -serial stdio -append "root=/dev/ram rdinit=/bin/sh kgdboc=ttyAMA0,115200 kgdbwait"
 
 # it is okay command
 #qemu-system-arm -M vexpress-a9 -cpu cortex-a9  -m 128M -kernel ./arm-image/kernel/zImage -initrd arm-image/rootfs.img -dtb arm-image/kernel/vexpress-v2p-ca9.dtb -append "root=/dev/ram rdinit=/bin/sh kgdboc=ttyAMA0,115200 kgdbwait"
