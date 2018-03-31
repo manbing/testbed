@@ -8,11 +8,11 @@ start)
 ;;
 
 kgbd)
-	sudo qemu-system-arm -M vexpress-a9 -cpu cortex-a9 -m 1024M -net nic -net tap -kernel ./arm-image/kernel/zImage -dtb arm-image/kernel/vexpress-v2p-ca9.dtb -initrd arm-image/rootfs.img -append "root=/dev/ram rdinit=/bin/sh kgdboc=ttyAMA0,115200 kgdbwait" -serial tcp::1234,server
+	sudo qemu-system-arm -M vexpress-a9 -cpu cortex-a9 -m 1024M -net nic -net tap -kernel ./arm-image/kernel/zImage -dtb arm-image/kernel/vexpress-v2p-ca9.dtb -initrd arm-image/rootfs.img -append "root=/dev/ram rdinit=/sbin/init kgdboc=ttyAMA0,115200 kgdbwait" -serial tcp::1234,server
 ;;
 
 gdb)
-	sudo qemu-system-arm -M vexpress-a9 -cpu cortex-a9 -m 1024M -net nic -net tap -kernel ./arm-image/kernel/zImage -dtb arm-image/kernel/vexpress-v2p-ca9.dtb -initrd arm-image/rootfs.img -serial stdio -append "root=/dev/ram rdinit=/bin/sh" -S -gdb tcp::1234
+	sudo qemu-system-arm -M vexpress-a9 -cpu cortex-a9 -m 1024M -net nic -net tap -kernel ./arm-image/kernel/zImage -dtb arm-image/kernel/vexpress-v2p-ca9.dtb -initrd arm-image/rootfs.img -serial stdio -append "root=/dev/ram rdinit=/sbin/init" -S -gdb tcp::1234
 ;;
 
 host_bridge)
