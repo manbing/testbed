@@ -100,6 +100,20 @@ config SMSC911X
 	  To compile this driver as a module, choose M here. The module
 	  will be called smsc911x.
 
+config TEST_SMSC911X
+	tristate "TEST SMSC LAN911x/LAN921x families embedded ethernet support"
+	depends on HAS_IOMEM
+	depends on !SMSC911X
+	select CRC32
+	select MII
+	select PHYLIB
+	---help---
+	  Say Y here if you want support for SMSC LAN911x and LAN921x families
+	  of ethernet controllers.
+
+	  To compile this driver as a module, choose M here. The module
+	  will be called smsc911x.
+
 config SMSC911X_ARCH_HOOKS
 	def_bool n
 	depends on SMSC911X
