@@ -14,7 +14,7 @@ APPLET = $(patsubst %.c,%, $(SOURCES))
 all: $(OBJS)
 	$(CC) ${LDLAGS} -o $(APPLET) $^
 
-%.o: $(SOURCES) 
+$(OBJS): $(SOURCES) 
 	$(CC) -M -c ${CFLAGS} $< > $@.cmd
 	$(CC) -c ${CFLAGS} -o $@ $<
 
