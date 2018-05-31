@@ -5,6 +5,7 @@ echo [$0][$1]
 case $1 in 
 start)
 	#sudo qemu-system-arm  -M vexpress-a9 -m 256M -kernel ./arm-image/kernel/zImage -dtb arm-image/kernel/vexpress-v2p-ca9.dtb -initrd arm-image/rootfs.img -append "root=/dev/ram rdinit=/sbin/init ip=dhcp console=ttyAMA0" -net user,hostfwd=tcp::2222-:22 -net nic,model=lan9118 -nographic
+	#sudo qemu-system-arm -M vexpress-a9 -cpu cortex-a9 -m 1024M -net nic -net tap -kernel ./arm-image/kernel/zImage -dtb arm-image/kernel/vexpress-v2p-ca9.dtb -initrd arm-image/rootfs.img -append "root=/dev/ram rdinit=/sbin/init console=ttyAMA0" -nographic
 	sudo qemu-system-arm -M vexpress-a9 -cpu cortex-a9 -m 1024M -net nic -net tap -kernel ./arm-image/kernel/zImage -dtb arm-image/kernel/vexpress-v2p-ca9.dtb -initrd arm-image/rootfs.img -append " root=/dev/ram rdinit=/sbin/init"
 ;;
 
