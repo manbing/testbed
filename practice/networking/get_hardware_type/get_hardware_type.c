@@ -11,9 +11,10 @@
 
 int main(int argc, char *argv[])
 {
-        int fd = -1;
+        int fd = -1, i = 0;
         struct ifreq ifr = {0};
         char *nic = NULL;
+        unsigned char *mac = NULL;
 
         if (argc != 2) {
                 printf("usage e.g., get_hardware_type eth0\n");
@@ -35,6 +36,9 @@ int main(int argc, char *argv[])
         }    
 
         printf("ifr.ifr_hwaddr.sa_family = %d\n", ifr.ifr_hwaddr.sa_family);
+        mac = (unsigned char *) ifr.ifr_hwaddr.sa_data;
 
-        return -1;
+        printf("Mac : %.2x:%.2x:%.2x:%.2x:%.2x:%.2x\n" , mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+
+        return 0;
 }
