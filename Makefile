@@ -26,6 +26,9 @@ include mk/flags.mk
 include mk/rules.mk
 include mk/cmsis.mk
 
+prepare:
+	ln -s programs.kernel/linux-4.11.4/ kernel
+
 clean:
 	find . -name "*.o" -type f -delete
 	find . -name "*.o.d" -type f -delete
@@ -37,3 +40,5 @@ clean:
 	rm -f include/kernel/syscalls.h
 	rm -f kernel/syscall.c
 	rm -f fs/version
+
+.PHONY: all clean install prepare 

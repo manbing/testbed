@@ -1,4 +1,4 @@
-CROSS_COMPILE ?= arm-linux-gnueabi-
+#CROSS_COMPILE ?= arm-linux-gnueabi-
 CC = $(CROSS_COMPILE)gcc
 AS = $(CROSS_COMPILE)as
 AR = $(CROSS_COMPILE)ar
@@ -9,21 +9,16 @@ WGET = wget
 PYTHON ?= python3
 QEMU_SYSTEM_ARM ?= /home/manbing/GitHub/Jserv/qemu_stm32/arm-softmmu/qemu-system-arm
 
-# FIXME: configurable via menuconfig or command line
-CFLAGS_OPT = -Os # -flto
+CFLAGS_OPT = -O0
 
 CFLAGS += \
-    -std=c99 \
     -W -Wall \
     -Iinclude -Iinclude/libc -I. \
+    -I$(CS_ROOT)/kernel/include	 \
     -ggdb \
     $(CFLAGS_OPT)
 
-# FIXME: make Piko-specific build options configurable
-CFLAGS += \
-
-LDFLAGS += \
-           -Wl,-Map=$(NAME).map
+LDFLAGS +=
 
 #CFLAGS  += -mthumb -mcpu=$(CPU)
 #LDFLAGS += -mthumb -march=$(ARCH)
