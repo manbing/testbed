@@ -1,4 +1,4 @@
-#CROSS_COMPILE ?= arm-linux-gnueabi-
+CROSS_COMPILE ?= /usr/bin/arm-linux-gnueabi-
 CC = $(CROSS_COMPILE)gcc
 AS = $(CROSS_COMPILE)as
 AR = $(CROSS_COMPILE)ar
