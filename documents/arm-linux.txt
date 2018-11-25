@@ -1,0 +1,70 @@
+# Environment setting:
+sudo apt-get install qemu-system
+sudo apt-get install gcc-arm-linux-gnueabi
+sudo apt-get install gdb-multiarch
+sudo apt-get install bridge-utils
+
+注：实验环境是 Ubuntu 16.04.1 gnome
+
+安装交叉编译工具、GDB 和 QEMU
+
+~/work $ sudo apt-get install gcc-arm-linux-gnueabi
+~/work $ sudo apt-get install gdb-multiarch
+~/work $ sudo apt-get install qemu-system-arm
+
+########################## Compiled Linux kernel (配置编译内核) ##########################
+~/work/linux-3.10.61 $ make CROSS_COMPILE=arm-linux-gnueabi- ARCH=arm vexpress_defconfig
+~/work/linux-3.10.61 $ make CROSS_COMPILE=arm-linux-gnueabi- ARCH=arm
+
+创建目录 arm-image 目录，将 zImage 和 dtb（device tree binary）文件复制到此目录
+~/work $ mkdir arm-image
+~/work $ cp ./linux-3.10.61/arch/arm/boot/zImage ./arm-image
+~/work $ cp ./linux-3.10.61/arch/arm/boot/dts/*.dtb ./arm-image
+
+~/work $ mkdir -p ./arm-linux/lib
+~/work $ cp -a /usr/arm-linux-gnueabi/lib/* ./arm-linux/lib
+
+########################## Create root filesystem ##########################
+# 复制编译器提供的 C 库和 ld 库
+~/work $ mkdir -p ./arm-linux/lib
+~/work $ cp -a /usr/arm-linux-gnueabi/lib/* ./arm-linux/lib
+
+# BusyBox
+(1) 将下载好的 BusyBox 解压在 /home/user/work/busybox-1.25.1 中，进行配置
+
+~/work/busybox-1.25.1 $ make ARCH=arm defconfig
+~/work/busybox-1.25.1 $ sudo apt-get install libncurses5-dev
+~/work/busybox-1.25.1 $ make menuconfig
+(2) 然后 ：
+
+Busybox Settings -> Build Options -> [*] Build BusyBox as a static Binary (no shared libs)
+保存退出
+(3) 编译和安装:
+
+~/work/busybox-1.25.1 $ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-
+~/work/busybox-1.25.1 $ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- install
+(4) 复制 _install 目录下的内容
+
+~/work/busybox-1.25.1 $ ./_install/* ../arm-linux/
+新建系统启动脚本
+
+~/work/arm-linux $ mkdir -p proc sys dev etc/init.d
+~/work/arm-linux $ vim etc/init.d/rcS
+
+rcS 的内容：
+#! /bin/sh
+mount -t proc none /proc
+mount -t sysfs none /sys
+mount -t devtmpfs devtmpfs /dev
+/sbin/mdev -s
+
+分配运行权限：
+~/work/arm-linux $ chmod +x  ./etc/init.d/rcS
+
+# Generate rootfs image
+find . | cpio -o --format=newc > ../rootfs.img
+
+########################## Qemu start ##########################
+    1. qemu-system-arm -M vexpress-a9 -cpu cortex-a9 -m 1024M -kernel linux-3.10/arch/arm/boot/zImage -initrd busybox-1.21.1/rootfs.img -append "root=/dev/ram rdinit=/sbin/init"
+
+    2. qemu-system-arm -M vexpress-a9 -cpu cortex-a9 -m 1024M -net nic -net tap -kernel ./arm-image/kernel/zImage -dtb arm-image/kernel/vexpress-v2p-ca9.dtb -initrd arm-image/rootfs.img -serial stdio -append " root=/dev/ram rdinit=/sbin/init"
