@@ -1,3 +1,3 @@
-[submodule "programs.kernel/pikoRT"]
-	path = programs.kernel/pikoRT
-	url = https://github.com/Piko-RT/pikoRT.git
+[submodule "programs.user/gpl/llvm"]
+	path = programs.user/gpl/llvm
+	url = http://llvm.org/git/llvm.git
