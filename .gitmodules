@@ -1,3 +1,6 @@
 [submodule "programs.user/gpl/llvm"]
 	path = programs.user/gpl/llvm
 	url = http://llvm.org/git/llvm.git
+[submodule "programs.user/private/test_submodule2"]
+	path = programs.user/private/test_submodule2
+	url = https://github.com/manbing/ethereum_private_chain.git
