@@ -10,3 +10,6 @@
 [submodule "programs.user/private/test_submodule4"]
 	path = programs.user/private/test_submodule4
 	url = https://github.com/manbing/ethereum_private_chain.git
+[submodule "programs.user/private/test_submodule5"]
+	path = programs.user/private/test_submodule5
+	url = http://llvm.org/git/llvm.git
