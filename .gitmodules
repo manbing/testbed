@@ -4,3 +4,6 @@
 [submodule "programs.user/gpl/cindy"]
 	path = programs.user/gpl/cindy
 	url = http://llvm.org/git/llvm.git
+[submodule "programs.user/private/ivy"]
+	path = programs.user/private/ivy
+	url = http://llvm.org/git/llvm.git
