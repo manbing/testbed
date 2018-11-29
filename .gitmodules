@@ -1,3 +1,6 @@
 [submodule "programs.user/gpl/llvm"]
 	path = programs.user/gpl/llvm
 	url = http://llvm.org/git/llvm.git
+[submodule "programs.user/gpl/tes_submodule2"]
+	path = programs.user/gpl/tes_submodule2
+	url = http://llvm.org/git/llvm.git
