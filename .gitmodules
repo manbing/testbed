@@ -1,0 +1,6 @@
+[submodule "programs.user/gpl/ply"]
+	path = programs.user/gpl/ply
+	url = https://github.com/manbing/ply.git
+[submodule "programs.user/gpl/llvm"]
+	path = programs.user/gpl/llvm
+	url = https://github.com/manbing/llvm.git
