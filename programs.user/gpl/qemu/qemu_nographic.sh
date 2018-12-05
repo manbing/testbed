@@ -8,7 +8,7 @@ start)
 ;;
 
 x86)
-	sudo qemu-system-x86_64 -m 1024M -kernel ./x86_64-linux/kernel/bzImage -initrd ./x86_64-linux/rootfs.cpio.gz -append "root=/dev/ram rdinit=/sbin/init console=ttyS0" -nographic
+	sudo qemu-system-x86_64 -smp 2 -m 1024M -kernel ./x86_64-linux/kernel/bzImage -initrd ./x86_64-linux/rootfs.cpio.gz -append "root=/dev/ram rdinit=/sbin/init console=ttyS0" -nographic -netdev user,id=user.0 -device e1000,netdev=user.0
 ;;
 
 kgdb)
