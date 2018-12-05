@@ -7,6 +7,10 @@ start)
 	sudo qemu-system-arm -M vexpress-a9 -cpu cortex-a9 -m 1024M -kernel ./arm-image/kernel/zImage -dtb arm-image/kernel/vexpress-v2p-ca9.dtb -initrd arm-image/rootfs.img -append "root=/dev/ram rdinit=/sbin/init ip=dhcp console=ttyAMA0" -nographic -net user,hostfwd=tcp::2222-:22 -net nic,model=lan9118
 ;;
 
+x86)
+	sudo qemu-system-x86_64 -m 1024M -kernel ./x86_64-linux/kernel/bzImage -initrd ./x86_64-linux/rootfs.cpio.gz -append "root=/dev/ram rdinit=/sbin/init console=ttyS0" -nographic
+;;
+
 kgdb)
 	sudo qemu-system-arm -M vexpress-a9 -cpu cortex-a9 -m 1024M -net nic -net tap -kernel ./arm-image/kernel/zImage -dtb arm-image/kernel/vexpress-v2p-ca9.dtb -initrd arm-image/rootfs.img -append "root=/dev/ram rdinit=/sbin/init kgdboc=ttyAMA0,115200 kgdbwait" -serial tcp::1234,server
 ;;
