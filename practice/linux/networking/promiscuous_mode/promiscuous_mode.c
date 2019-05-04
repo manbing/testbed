@@ -58,13 +58,11 @@ static int get_if_index(const char *if_name)
         }
         close(s);
         return ifr.ifr_ifindex;
-
-
 }
 
 int main(int argc, char *argv[])
 {
-        int fd = -1, index;
+        int fd = -1, index, i = 0;
         char *nic = NULL, *mac = NULL;
         struct packet_mreq request;
         char mac_address [6] = {0};
@@ -92,11 +90,14 @@ int main(int argc, char *argv[])
         }
 
         memset(&request, 0, sizeof(request));
+        request.mr_ifindex = index;
+        request.mr_alen = 6;
+
         if (argc == 2) {
                 /* Method 1 */
                 request.mr_type = PACKET_MR_PROMISC;
                 if (-1 == setsockopt(fd, SOL_PACKET, PACKET_ADD_MEMBERSHIP, &request, sizeof(request))) {
-                        printf("setsockopt fail\n");
+                        printf("[%s][%d] errno = %d, %s\n", __func__, __LINE__, errno, strerror(errno));
                         close(fd);
                         return -1;
                 }
@@ -113,13 +114,18 @@ int main(int argc, char *argv[])
                 request.mr_type = PACKET_MR_UNICAST;
                 memcpy(request.mr_address, mac_address, 6);
                 if (-1 == setsockopt(fd, SOL_PACKET, PACKET_ADD_MEMBERSHIP, &request, sizeof(request))) {
-                        printf("setsockopt fail\n");
+                        printf("[%s][%d] errno = %d, %s\n", __func__, __LINE__, errno, strerror(errno));
                         close(fd);
                         return -1;
                 }
         }
 
         printf("Set %s as promiscuous mode successfully.\n", nic);
+
+        for (i = 0; i < 6; i++) {
+                sleep(10);
+        }
+
         close(fd); 
         return 0;
 }
