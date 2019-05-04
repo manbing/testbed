@@ -94,7 +94,10 @@ int main(int argc, char *argv[])
         request.mr_alen = 6;
 
         if (argc == 2) {
-                /* Method 1 */
+                /*
+                 *  Method 1:
+                 *  Receviced the packet of ALL MAC address, as known as "promiscuous mode"
+                 */
                 request.mr_type = PACKET_MR_PROMISC;
                 if (-1 == setsockopt(fd, SOL_PACKET, PACKET_ADD_MEMBERSHIP, &request, sizeof(request))) {
                         printf("[%s][%d] errno = %d, %s\n", __func__, __LINE__, errno, strerror(errno));
@@ -102,6 +105,10 @@ int main(int argc, char *argv[])
                         return -1;
                 }
         } else if (argc == 3) {
+                /*
+                 *  Method 2:
+                 *  Receviced the packet of specific MAC address
+                 */
                 sscanf(mac, "%02hhx:%02hhx:%02hhx:%02hhx:%02hhx:%02hhx",
                                 &mac_address[0],
                                 &mac_address[1],
@@ -110,7 +117,6 @@ int main(int argc, char *argv[])
                                 &mac_address[4],
                                 &mac_address[5]);
 
-                /* Method 2 */
                 request.mr_type = PACKET_MR_UNICAST;
                 memcpy(request.mr_address, mac_address, 6);
                 if (-1 == setsockopt(fd, SOL_PACKET, PACKET_ADD_MEMBERSHIP, &request, sizeof(request))) {
