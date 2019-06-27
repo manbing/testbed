@@ -21,6 +21,9 @@ deps := $(OBJS:%.o=.%.o.d)
 
 all: $(CMSIS)/$(PLAT) $(NAME).lds $(NAME).bin
 
+%config:
+	$(Q)$(MAKE) $(build)=scripts/kconfig $@
+
 #include generic build rules
 include mk/flags.mk
 include mk/rules.mk
