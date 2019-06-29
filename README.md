@@ -1,1 +1,1 @@
-# Compiling_platform
+This is Linux-like compile system.

@@ -1,9 +1,10 @@
-NAME = rtos
+#PLAT ?= stm32p103
+#CMSIS = external/cmsis
 
-PLAT ?= stm32p103
-CMSIS = external/cmsis
+MAKE = make
+Q = @
 
-include platform/$(PLAT)/Makefile
+#include platform/$(PLAT)/Makefile
 
 # arch-specific
 SSRC += arch/v7m-head.S arch/v7m-entry.S arch/v7m-svcall.S
@@ -22,12 +23,12 @@ deps := $(OBJS:%.o=.%.o.d)
 all: $(CMSIS)/$(PLAT) $(NAME).lds $(NAME).bin
 
 %config:
-	$(Q)$(MAKE) $(build)=scripts/kconfig $@
+	$(Q)$(MAKE) -C scripts/kconfig $@
 
 #include generic build rules
 include mk/flags.mk
 include mk/rules.mk
-include mk/cmsis.mk
+#include mk/cmsis.mk
 
 prepare:
 	ln -s programs.kernel/linux-4.11.4/ kernel

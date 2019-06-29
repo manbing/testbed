@@ -7,9 +7,9 @@ else
     VECHO = @printf
 endif
 
-#$(BIN): $(OBJS)
-#	$(VECHO) "  LD\t\t$@\n"
-#	$(Q)$(CC) $(LDFLAGS) -o $@ $^
+$(BIN): $(OBJS)
+	$(VECHO) "  LD\t\t$@\n"
+	$(Q)$(CC) -o $@ $^ $(LDFLAGS)
 
 %.o: %.c
 	$(VECHO) "  CC\t\t$@\n"
