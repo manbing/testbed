@@ -11,7 +11,7 @@ CFLAGS = -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer
 OBJS = $(patsubst %.c,%.o, $(MCONF_SRC) $(LXD_SRC))
 
 
-all: $(OBJS) $(BIN)
+all menuconfig: $(OBJS) $(BIN)
 
 include ../../mk/rules.mk
 

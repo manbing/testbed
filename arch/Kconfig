@@ -1,16 +1,27 @@
-menu "Arch"
+menu "Architecture"
 
 choice
 	prompt "Arch"
-        default ARCH_X86_64
+        default ARCH_X86
         help
             Select the Arch which do you want
 
-config ARCH_X86_64
-	bool "X86_64"
+config ARCH_X86
+	bool "x86"
         help
-            Intel Chipset, X86 64 bits
+            Intel Chipset
 
+config ARCH_ARM
+	bool "arm"
+        help
+            ARM Chipset
 endchoice
+
+config ARCH
+	string
+        default "x86" if ARCH_X86
+        default "arm" if ARCH_ARM
+        help
+            Arch string
 
 endmenu

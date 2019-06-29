@@ -24,6 +24,7 @@ all: $(CMSIS)/$(PLAT) $(NAME).lds $(NAME).bin
 
 %config:
 	$(Q)$(MAKE) -C scripts/kconfig $@
+	./scripts/kconfig/mconf Kconfig
 
 #include generic build rules
 include mk/flags.mk

@@ -6,6 +6,6 @@ comment "Compiler: $(CC_VERSION_TEXT)"
 
 source "arch/Kconfig"
 
-#source "programs.user/Kconfig"
+source "programs.kernel/Kconfig"
 
-#source "programs.kernel/Kconfig"
+source "programs.user/Kconfig"
