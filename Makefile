@@ -1,49 +1,30 @@
-#PLAT ?= stm32p103
-#CMSIS = external/cmsis
+include ./mk/env.mk
+include ./.config
+export ./.config
+
+PREBUILD_FILE = kernel arch.mk mk/env.mk
 
 MAKE = make
 Q = @
 
 #include platform/$(PLAT)/Makefile
 
-# arch-specific
-SSRC += arch/v7m-head.S arch/v7m-entry.S arch/v7m-svcall.S
-CSRC += arch/v7m-faults.c
-CSRC += kernel/syscall.c
-CSRC += \
-        $(wildcard kernel/*.c) \
-        $(wildcard kernel/mm/*.c) \
-        libc/piko/stubs.c
-
-OBJS += $(SSRC:.S=.o) $(CSRC:.c=.o)
-OBJS := $(sort $(OBJS))
-
-deps := $(OBJS:%.o=.%.o.d)
-
-all: $(CMSIS)/$(PLAT) $(NAME).lds $(NAME).bin
+all: .config $(PREBUILD_FILE)
 
 %config:
-	$(Q)$(MAKE) -C scripts/kconfig $@
+	$(Q)$(MAKE) -C scripts/kconfig menuconfig
 	./scripts/kconfig/mconf Kconfig
 
-#include generic build rules
-include mk/flags.mk
-include mk/rules.mk
-#include mk/cmsis.mk
+$(PREBUILD_FILE):
+	make prebuild
 
-prepare:
-	ln -s programs.kernel/linux-4.11.4/ kernel
+prebuild:
+	ln -sf programs.kernel/core/$(CONFIG_KERNEL_CORE) kernel
+	ln -sf arch/$(CONFIG_ARCH)/platform/$(CONFIG_CPU_ID)/arch.mk arch.mk
+	$(PYTHON) gen_mk.py --env
 
 clean:
-	find . -name "*.o" -type f -delete
-	find . -name "*.o.d" -type f -delete
-	rm -f $(deps)
-	find $(CMSIS) -name "*.o" -type f -delete
-	rm -f $(NAME).map $(NAME).lds
-	rm -f $(NAME).elf $(NAME).bin
-# Remove GEN files
-	rm -f include/kernel/syscalls.h
-	rm -f kernel/syscall.c
-	rm -f fs/version
+
+install:
 
 .PHONY: all clean install prepare 

@@ -1,22 +1,5 @@
 menu "Kernel's Programs"
 
-choice
-	prompt "Core"
-        default CORE_LINUX
-        help
-            Select the Arch which do you want
-
-config CORE_LINUX
-	bool "Linux"
-        help
-            Linux kernel
-
-endchoice
-
-config KERNEL_CORE
-	string
-        default "linux" if CORE_LINUX
-        help
-            Linux kernel
+source "programs.kernel/core/Kconfig"
 
 endmenu

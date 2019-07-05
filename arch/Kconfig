@@ -24,4 +24,8 @@ config ARCH
         help
             Arch string
 
+if ARCH_X86
+source  "arch/x86/Kconfig"
+endif # if ARCH_X86
+
 endmenu

@@ -1,0 +1,5 @@
+menu "x86 CPU Menu"
+
+source "arch/x86/platform/i5-8400/Kconfig"
+
+endmenu

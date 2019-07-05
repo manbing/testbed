@@ -1,2 +1,4 @@
-hostc_flags    = -Wp,-MD,$(depfile) $(__hostc_flags)
-hostcxx_flags  = -Wp,-MD,$(depfile) $(__hostcxx_flags)
+HOSTCC  = gcc
+WGET = wget
+PYTHON ?= python3
+QEMU_SYSTEM_ARM ?= /home/manbing/GitHub/Jserv/qemu_stm32/arm-softmmu/qemu-system-arm
