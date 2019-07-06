@@ -1,11 +1,9 @@
-include ./mk/env.mk
 include ./.config
+include ./mk/host.mk
+include ./mk/flags.mk
 export ./.config
 
 PREBUILD_FILE = kernel arch.mk mk/env.mk
-
-MAKE = make
-Q = @
 
 #include platform/$(PLAT)/Makefile
 
@@ -13,15 +11,15 @@ all: .config $(PREBUILD_FILE)
 
 %config:
 	$(Q)$(MAKE) -C scripts/kconfig menuconfig
-	./scripts/kconfig/mconf Kconfig
+	$(Q)./scripts/kconfig/mconf Kconfig
 
 $(PREBUILD_FILE):
-	make prebuild
+	$(Q)$(MAKE) prebuild
 
 prebuild:
-	ln -sf programs.kernel/core/$(CONFIG_KERNEL_CORE) kernel
-	ln -sf arch/$(CONFIG_ARCH)/platform/$(CONFIG_CPU_ID)/arch.mk arch.mk
-	$(PYTHON) gen_mk.py --env
+	$(Q)ln -sf -T programs.kernel/core/$(CONFIG_KERNEL_CORE) kernel
+	$(Q)ln -sf -T arch/$(CONFIG_ARCH)/platform/$(CONFIG_CPU_ID)/arch.mk ./arch.mk
+	$(Q)$(PYTHON) scripts/gen_mk.py --env
 
 clean:
 
