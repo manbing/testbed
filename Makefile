@@ -1,28 +1,38 @@
 include ./.config
+include ./arch.mk
+include ./kernel.mk
+include ./mk/env.mk
 include ./mk/host.mk
 include ./mk/flags.mk
+
 export ./.config
 
-PREBUILD_FILE = kernel arch.mk mk/env.mk
+PHONY =
 
-#include platform/$(PLAT)/Makefile
+PREBUILD_FILE = kernel_dir
 
-all: .config $(PREBUILD_FILE)
+all: .config $(PREBUILD_FILE) build_kernel
 
 %config:
 	$(Q)$(MAKE) -C scripts/kconfig menuconfig
 	$(Q)./scripts/kconfig/mconf Kconfig
 
-$(PREBUILD_FILE):
-	$(Q)$(MAKE) prebuild
-
-prebuild:
-	$(Q)ln -sf -T programs.kernel/core/$(CONFIG_KERNEL_CORE) kernel
+arch.mk:
 	$(Q)ln -sf -T arch/$(CONFIG_ARCH)/platform/$(CONFIG_CPU_ID)/arch.mk ./arch.mk
+
+kernel.mk:
+	$(Q)ln -sf -T arch/$(CONFIG_ARCH)/kernel.mk ./kernel.mk
+
+kernel_dir:
+	$(Q)ln -sf -T programs.kernel/core/$(CONFIG_KERNEL_CORE) kernel
+
+mk/env.mk:
 	$(Q)$(PYTHON) scripts/gen_mk.py --env
 
 clean:
 
 install:
 
-.PHONY: all clean install prepare 
+PHONY += all clean install
+
+.PHONY: $(PHONY)
