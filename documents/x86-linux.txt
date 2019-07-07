@@ -8,6 +8,7 @@ make  modules_install INSTALL_MOD_PATH=/home/manbing/GitHub/Manbing/testbed/x86_
 make ARCH=mips CROSS_COMPILE=$(CROSS_COMPILE) modules
 find . -print0  | cpio --null -ov --format=newc | gzip -9 > ../rootfs.cpio.gz
 
+/lib/x86_64-linux-gnu
 
 Networking setting
 host:

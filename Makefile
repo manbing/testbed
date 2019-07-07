@@ -1,17 +1,30 @@
 include ./.config
 include ./arch.mk
-include ./kernel.mk
 include ./mk/env.mk
 include ./mk/host.mk
 include ./mk/flags.mk
 
 export ./.config
+export
 
 PHONY =
 
 PREBUILD_FILE = kernel_dir
 
-all: .config $(PREBUILD_FILE) build_kernel
+all: .config $(PREBUILD_FILE) build_kernel build_userspace
+
+prebuild: .config $(PREBUILD_FILE)
+
+build_all: build_kernel build_userspace
+
+construct_rootfs: rootfs image
+	$(Q)$(MAKE) install_kernel
+	$(Q)$(MAKE) install_userspace
+	$(Q)$(MAKE) install_library
+
+release_firmware:
+
+include ./kernel.mk
 
 %config:
 	$(Q)$(MAKE) -C scripts/kconfig menuconfig
@@ -29,10 +42,23 @@ kernel_dir:
 mk/env.mk:
 	$(Q)$(PYTHON) scripts/gen_mk.py --env
 
+image:
+	$(Q)mkdir $@
+
+rootfs:
+	$(Q)rm -rf rootfs
+	$(Q)mkdir rootfs
+	$(Q)cd rootfs;$(Q)mkdir -p proc sys dev etc/init.d
+
+build_userspace:
+	$(Q)$(MAKE) -C programs.user 
+
+install_userspace:
+
 clean:
 
 install:
 
-PHONY += all clean install
+PHONY += all clean install rootfs
 
 .PHONY: $(PHONY)

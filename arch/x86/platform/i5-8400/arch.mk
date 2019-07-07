@@ -8,3 +8,7 @@ HOSTCC  = gcc
 
 CFLAGS +=
 LDFLAGS +=
+
+
+install_library:
+	$(Q)cp -rf /lib/x86_64-linux-gnu/* $(TARGET_DIR)/lib/ 
