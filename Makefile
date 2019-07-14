@@ -33,6 +33,9 @@ include ./kernel.mk
 arch.mk:
 	$(Q)ln -sf -T arch/$(CONFIG_ARCH)/platform/$(CONFIG_CPU_ID)/arch.mk ./arch.mk
 
+arch_build.mk:
+	$(Q)ln -sf -T arch/$(CONFIG_ARCH)/platform/$(CONFIG_CPU_ID)/arch_build.mk ./arch_build.mk
+
 kernel.mk:
 	$(Q)ln -sf -T arch/$(CONFIG_ARCH)/kernel.mk ./kernel.mk
 
