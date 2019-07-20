@@ -1,8 +1,14 @@
 menu "GNU General Public License (GPL)"
 config GPL_TCPDUMP
 	bool "TCPDUMP"
-        default y
+        default n
         help
             TCPDump open source
+
+config GPL_BUSYBOX
+	bool "Busybox"
+        default y
+        help
+            Busybox
 
 endmenu

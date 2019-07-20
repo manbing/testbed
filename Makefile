@@ -11,7 +11,7 @@ PHONY =
 
 PREBUILD_FILE = kernel_dir
 
-all: .config $(PREBUILD_FILE) build_kernel build_userspace
+all: .config $(PREBUILD_FILE)
 
 prebuild: .config $(PREBUILD_FILE)
 
@@ -51,16 +51,18 @@ image:
 rootfs:
 	$(Q)rm -rf rootfs
 	$(Q)mkdir rootfs
-	$(Q)cd rootfs;$(Q)mkdir -p proc sys dev etc/init.d
+	$(Q)cd rootfs;		\
+	$(Q)mkdir -p proc sys dev etc/init.d
 
 build_userspace:
 	$(Q)$(MAKE) -C programs.user 
 
 install_userspace:
+	$(Q)$(MAKE) -C programs.user install
 
 clean:
 
-install:
+install: image rootfs install_kernel install_userspace
 
 PHONY += all clean install rootfs
 

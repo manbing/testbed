@@ -1,5 +1,6 @@
 TOP_DIR:=$(subst /programs., /programs., $(shell pwd))
 TOP_DIR:=$(word 1, $(TOP_DIR))
+
 include $(TOP_DIR)/mk/env.mk
 include $(TOP_DIR)/arch.mk
 include $(TOP_DIR)/mk/host.mk
