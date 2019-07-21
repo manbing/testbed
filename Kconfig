@@ -9,3 +9,5 @@ source "arch/Kconfig"
 source "programs.kernel/Kconfig"
 
 source "programs.user/Kconfig"
+
+source "lib/Kconfig"

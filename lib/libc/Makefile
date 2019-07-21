@@ -1,7 +1,8 @@
-TOP_DIR:= ../../
+TOP_DIR:= ../..
 include $(TOP_DIR)/mk/env.mk
 include $(TOP_DIR)/arch.mk
 include $(TOP_DIR)/mk/host.mk
+include $(TOP_DIR)/mk/flags.mk
 
 SRC_DIR = glibc
 BUILD = build

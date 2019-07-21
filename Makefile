@@ -8,21 +8,11 @@ export ./.config
 export
 
 PHONY =
-
 PREBUILD_FILE = kernel_dir
 
-all: .config $(PREBUILD_FILE)
+all prebuild: .config $(PREBUILD_FILE)
 
-prebuild: .config $(PREBUILD_FILE)
-
-build_all: build_kernel build_userspace
-
-construct_rootfs: rootfs image
-	$(Q)$(MAKE) install_kernel
-	$(Q)$(MAKE) install_userspace
-	$(Q)$(MAKE) install_library
-
-release_firmware:
+build_all: build_kernel build_userspace build_library
 
 include ./kernel.mk
 
@@ -60,10 +50,22 @@ build_userspace:
 install_userspace:
 	$(Q)$(MAKE) -C programs.user install
 
-clean:
+clean_userspace:
+	$(Q)$(MAKE) -C programs.user clean
 
-install: image rootfs install_kernel install_userspace
+build_library:
+	$(Q)$(MAKE) -C lib 
 
-PHONY += all clean install rootfs
+install_library:
+	$(Q)$(MAKE) -C lib install 
+
+clean_library:
+	$(Q)$(MAKE) -C lib clean 
+
+clean: clean_kernel clean_userspace clean_library
+
+install: image rootfs install_kernel install_userspace install_library
+
+PHONY += all clean install rootfs library
 
 .PHONY: $(PHONY)

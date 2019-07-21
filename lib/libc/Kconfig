@@ -1,0 +1,18 @@
+choice
+	prompt "C Library"
+        default LIB_GLIBC
+        help
+            Select C library which you want
+
+config LIB_GLIBC
+	bool "GNU C Library"
+        help
+            GNU C Library
+
+endchoice
+
+config LIB_C
+	string
+        default "glibc" if LIB_GLIBC
+        help
+            C library  which you use

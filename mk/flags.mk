@@ -1,3 +1,3 @@
-CFLAGS += -g -O0    \
+CFLAGS += -g -Og   \
 
 LDFLAGS +=
