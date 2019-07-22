@@ -4,3 +4,6 @@
 [submodule "programs.user/gpl/llvm"]
 	path = programs.user/gpl/llvm
 	url = https://github.com/manbing/llvm.git
+[submodule "practice/tmp/RTOS"]
+	path = practice/tmp/RTOS
+	url = https://github.com/manbing/RTOS.git
