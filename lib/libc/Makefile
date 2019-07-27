@@ -12,7 +12,7 @@ all: $(BUILD)
 
 $(BUILD):
 	mkdir $@; cd $@; \
-        ../$(SRC_DIR)/configure --host=$(HOST) --prefix=$(TARGET_DIR) --enable-add-ons
+        ../$(SRC_DIR)/configure --host=$(HOST) --prefix=$(TARGET_DIR) --disable-werror
 
 clean:
 	rm -rf $(BUILD)
