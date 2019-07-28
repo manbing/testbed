@@ -4,8 +4,7 @@ include ./mk/env.mk
 include ./mk/host.mk
 include ./mk/flags.mk
 
-export ./.config
-export
+.EXPORT_ALL_VARIABLES:
 
 PHONY =
 PREBUILD_FILE = kernel_dir

@@ -4,6 +4,9 @@ include $(TOP_DIR)/arch.mk
 include $(TOP_DIR)/mk/host.mk
 include $(TOP_DIR)/mk/flags.mk
 
+## If export this variable, it will cause install procedure fial.
+unexport MAKEFILE_LIST
+
 SRC_DIR = glibc
 BUILD = build
 
