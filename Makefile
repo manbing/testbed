@@ -11,7 +11,7 @@ PREBUILD_FILE = kernel_dir
 
 all prebuild: .config $(PREBUILD_FILE)
 
-build_all: build_kernel build_userspace build_library
+build: build_kernel build_userspace build_library
 
 include ./kernel.mk
 
@@ -37,7 +37,7 @@ mk/env.mk:
 image:
 	$(Q)mkdir $@
 
-rootfs:
+rootfs_folder:
 	$(Q)rm -rf rootfs
 	$(Q)mkdir rootfs
 	$(Q)cd rootfs;		\
@@ -63,7 +63,10 @@ clean_library:
 
 clean: clean_kernel clean_userspace clean_library
 
-install: image rootfs install_kernel install_userspace install_library
+install: image rootfs_folder install_kernel install_userspace install_library
+
+release:
+	cd rootfs; find . | cpio -o --format=newc > $(TOP_DIR)/image/rootfs.img
 
 PHONY += all clean install rootfs library
 
