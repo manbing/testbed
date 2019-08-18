@@ -9,7 +9,15 @@ include ./mk/flags.mk
 PHONY =
 PREBUILD_FILE = kernel_dir
 
-all prebuild: .config $(PREBUILD_FILE)
+all:
+	$(Q)echo "Please follow below build flow:"
+	$(Q)echo "-- make prebuild"
+	$(Q)echo "-- make build"
+	$(Q)echo "-- make install"
+	$(Q)echo "-- make release"
+
+prebuild: .config $(PREBUILD_FILE)
+	$(Q)ln -sf -T  programs.user/gpl/qemu/qemu_$(CONFIG_ARCH).sh ./qemu.sh
 
 build: build_kernel build_userspace build_library
 
@@ -35,13 +43,14 @@ mk/env.mk:
 	$(Q)$(PYTHON) scripts/gen_mk.py --env
 
 image:
+	$(Q)rm -rf $@
 	$(Q)mkdir $@
 
-rootfs_folder:
-	$(Q)rm -rf rootfs
-	$(Q)mkdir rootfs
-	$(Q)cd rootfs;		\
-	$(Q)mkdir -p proc sys dev etc/init.d
+rootfs:
+	rm -rf $@
+	mkdir $@
+	cd $@;		\
+	mkdir -p proc sys dev etc/init.d
 
 build_userspace:
 	$(Q)$(MAKE) -C programs.user 
@@ -63,11 +72,11 @@ clean_library:
 
 clean: clean_kernel clean_userspace clean_library
 
-install: image rootfs_folder install_kernel install_userspace install_library
+install: image rootfs install_kernel install_userspace install_library
 
 release:
 	cd rootfs; find . | cpio -o --format=newc > $(TOP_DIR)/image/rootfs.img
 
-PHONY += all clean install rootfs library
+PHONY += all clean install library rootfs
 
 .PHONY: $(PHONY)
