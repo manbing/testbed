@@ -342,7 +342,7 @@ comment 'Build Options'
 
 config STATIC
 	bool "Build BusyBox as a static binary (no shared libs)"
-	default n
+	default y
 	help
 	  If you want to build a static BusyBox binary, which does not
 	  use or require any shared libraries, then enable this option.
