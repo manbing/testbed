@@ -50,7 +50,8 @@ rootfs:
 	rm -rf $@
 	mkdir $@
 	cd $@;		\
-	mkdir -p proc sys dev etc/init.d
+	mkdir -p proc sys dev etc/init.d;	\
+	cp ../scripts/rootfs/rcS etc/init.d
 
 build_userspace:
 	$(Q)$(MAKE) -C programs.user 
