@@ -1,3 +1,6 @@
+# Ignore everything in this directory
 *.exe
 *.o
 cscope.*
+# Except this file
+!.gitignore

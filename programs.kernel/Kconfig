@@ -1,5 +1,0 @@
-menu "Kernel's Programs"
-
-source "programs.kernel/core/Kconfig"
-
-endmenu

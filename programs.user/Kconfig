@@ -1,7 +1,0 @@
-menu "User Space's Programs"
-
-source "programs.user/gpl/Kconfig"
-
-#source "private/Kconfig"
-
-endmenu
