@@ -1,0 +1,14 @@
+remove all kprobeevent
+echo>/sys/kernel/debug/tracing/kprobe_events
+
+echo 'p:irene netif_receive_skb' > /sys/kernel/debug/tracing/kprobe_events
+cat /sys/kernel/debug/tracing/events/kprobes/irene/id
+cat /sys/kernel/debug/tracing/trace_pipe
+cat /sys/kernel/debug/tracing/trace
+
+~/Github/llvm-project/llvm/build/bin/llvm-objdump --arch-name=bpf -S test_bpf_kern.o
+dd if=./test_bpf_kern.o  of=bpf_prog bs=1 count=8*60 skip=64
+
+git clone https://github.com/llvm/llvm-project.git
+
+make M=samples/bpf LLC=~/Github/llvm-project/llvm/build/bin/llc CLANG=~/Github/llvm-project/llvm/build/bin/clang
